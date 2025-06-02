@@ -1,8 +1,16 @@
-# 🗨️ Forum Project – PHP Web Development Practice
+# 🗨️ Forum Project
 
 Welcome to your very own **Forum Website**!  
 This project is a fully functional, real-time web forum—built in PHP with SQLite.  
 It’s perfect for anyone who wants to learn, experiment, and practice web development.
+
+## 🌐 Live Demo
+
+You can try out the forum live at:
+
+➡️ [forumankara.dns-cloud.net](http://forumankara.dns-cloud.net/)
+
+**Visit the link above to explore the platform and test its features in real time!**
 
 ---
 
@@ -94,12 +102,11 @@ If you use Apache (recommended for production/local hosting):
 
 ## 💡 Why This Project?
 
-I have created this projec to impove my skills in following:
+I have created this project to impove my skills in following:
 - **PHP**
 - **SQLite**
-- **Database Design With Diagrams**
-- **Authentication and real-time features**
-- **Best practices for modern, interactive web apps**
+- **Database Design**
+- **Authentication and Session Management**
 
 ---
 
