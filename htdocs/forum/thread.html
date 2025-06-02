@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forum - Thread</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+  <link rel="stylesheet" href="css/colors.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-comments"></i> Forum
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                <i class="fas fa-home"></i> Home
+                </a>
+            </li>
+            <li class="nav-item" id="messagesLink" style="display:none;">
+                <a class="nav-link" href="messages.html">
+                <i class="fas fa-envelope"></i> Messages
+                </a>
+            </li>
+            <li class="nav-item" id="loginLink">
+                <a class="nav-link" href="login.html">
+                <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </li>
+            <li class="nav-item" id="registerLink">
+                <a class="nav-link" href="register.html">
+                <i class="fas fa-user-plus"></i> Register
+                </a>
+            </li>
+          <li
+            class="nav-item dropdown"
+            id="userMenu"
+            style="display:none;">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown">
+              <img
+                src="images/default-avatar.png"
+                class="rounded-circle"
+                width="25"
+                height="25"
+                id="navAvatar">
+              <span id="navUsername"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item" href="profile.html">
+                  <i class="fas fa-user"></i> Profile
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onclick="showNotifications()">
+                  <i class="fas fa-bell"></i> Notifications
+                  <span class="badge bg-danger" id="notifCount">0</span>
+                </a>
+              </li>
+              <li
+                id="adminMenu"
+                style="display:none;">
+                <hr class="dropdown-divider">
+                <a class="dropdown-item" href="admin.html">
+                  <i class="fas fa-cog"></i> Admin Panel
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onclick="logout()">
+                  <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container mt-4">
+    <!-- Thread Content -->
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white">
+        <h3 id="threadTitle"></h3>
+        <small id="threadCategory"></small>
+      </div>
+      <div class="card-body">
+        <div class="d-flex mb-3">
+          <img
+            id="threadAuthorAvatar"
+            src="images/default-avatar.png"
+            width="50"
+            height="50"
+            class="rounded-circle me-3">
+          <div>
+            <h5 id="threadAuthorName" class="mb-0"></h5>
+            <small
+              class="text-muted"
+              id="threadCreatedAt"></small>
+            <small class="text-muted ms-3">
+              <i class="fas fa-eye"></i>
+              <span id="threadClickTotal">0</span> views
+              (<span id="threadClickDaily">0</span> today,
+               <span id="threadClickWeekly">0</span> this week,
+               <span id="threadClickMonthly">0</span> this month)
+            </small>
+            <button
+              class="btn btn-sm btn-primary ms-2"
+              id="messageAuthorBtn"
+              onclick="">
+              <i class="fas fa-envelope"></i> Message
+            </button>
+
+            <button class="btn btn-sm btn-warning ms-2" id="editThreadBtn" style="display:none;">
+                <i class="fas fa-edit"></i> Edit Thread
+            </button>
+            <button class="btn btn-sm btn-danger ms-2" id="deleteThreadBtn" style="display:none;">
+                <i class="fas fa-trash"></i> Delete Thread
+            </button>
+          </div>
+        </div>
+        <div
+          id="threadContent"
+          class="thread-content"></div>
+        <div class="mt-3">
+          <button
+            class="btn btn-sm btn-outline-success"
+            onclick="likeThread()">
+            <i class="fas fa-thumbs-up"></i>
+            <span id="threadLikes">0</span>
+          </button>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            onclick="dislikeThread()">
+            <i class="fas fa-thumbs-down"></i>
+            <span id="threadDislikes">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reply Form -->
+    <div
+      class="card mb-4"
+      id="replyFormCard"
+      style="display:none;">
+      <div class="card-header">
+        <h5>Post a Reply</h5>
+      </div>
+      <div class="card-body">
+        <div
+          id="replyToInfo"
+          class="alert alert-info mb-3"
+          style="display:none;">
+          Replying to: <span id="replyToText"></span>
+          <button
+            class="btn btn-sm btn-secondary float-end"
+            onclick="cancelReply()">
+            Cancel Reply
+          </button>
+        </div>
+        <form id="postForm">
+          <div class="mb-3">
+            <textarea
+              class="form-control"
+              id="postContent"
+              rows="4"
+              placeholder="Write your reply..."
+              required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Post Reply
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Posts Container -->
+    <div id="postsContainer">
+      <!-- Posts will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Edit Post Modal -->
+  <div class="modal fade" id="editPostModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Post</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <textarea
+            class="form-control"
+            id="editPostContent"
+            rows="4"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="updatePost()">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications Modal -->
+  <div class="modal fade" id="notificationsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Notifications</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="notificationsList">
+          <!-- Notifications will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Box -->
+  <div
+    id="messageBox"
+    class="message-box"
+    style="display:none;">
+    <div class="message-header">
+      <img
+        src="images/default-avatar.png"
+        width="30"
+        height="30"
+        class="rounded-circle me-2">
+      <span id="messageRecipientName"></span>
+      <button
+        type="button"
+        class="btn-close btn-sm float-end"
+        onclick="closeMessageBox()"></button>
+    </div>
+    <div class="message-body" id="messageHistory">
+      <!-- Messages will be loaded here -->
+    </div>
+    <div class="message-input">
+      <input
+        type="text"
+        class="form-control"
+        id="messageInput"
+        placeholder="Type a message...">
+      <button
+        class="btn btn-primary btn-sm"
+        onclick="sendMessage()">
+        Send
+      </button>
+    </div>
+  </div>
+  <div class="modal fade" id="editThreadModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Thread</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="editThreadTitle" class="form-label">Title</label>
+          <input type="text" class="form-control" id="editThreadTitle">
+        </div>
+        <div class="mb-3">
+          <label for="editThreadContent" class="form-label">Content</label>
+          <textarea class="form-control" id="editThreadContent" rows="6"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="updateThread()">
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/thread.js"></script>
+</body>
+</html>

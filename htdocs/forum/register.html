@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forum Ankara – Register</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="css/colors.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-comments me-1"></i> Forum Ankara
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fas fa-home me-1"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="register.html">
+              <i class="fas fa-user-plus me-1"></i> Register
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">
+              <i class="fas fa-sign-in-alt me-1"></i> Login
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Register Card -->
+  <div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow">
+          <!-- Gradient header matching modals & thread page -->
+          <div class="card-header bg-primary text-white text-center">
+            <i class="fas fa-user-plus me-2"></i> Register
+          </div>
+          <div class="card-body p-5">
+            <div id="alertContainer"></div>
+            <form id="registerForm" novalidate>
+              <!-- Full Name -->
+              <div class="mb-4">
+                <label for="fullname" class="form-label">Full Name</label>
+                <div class="input-group has-validation"> 
+                  <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fullname"
+                    required
+                    minlength="3"
+                    pattern="[A-Za-zÇçĞğİıÖöŞşÜü\s'\-]+"
+                    placeholder="Your full name">
+                  <div class="invalid-feedback">
+                    Please provide your full name (3+ characters, letters, spaces, hyphens, apostrophes).
+                  </div>
+                </div>
+                <div class="form-text text-muted">
+                  Only letters, spaces, hyphens & apostrophes. 3+ characters.
+                </div>
+              </div>
+              
+              <!-- Nickname -->
+              <div class="mb-4">
+                <label for="nickname" class="form-label">Nickname</label>
+                <div class="input-group has-validation"> 
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nickname"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    pattern="[a-zA-Z0-9_-]+"
+                    placeholder="Unique nickname">
+                  <div class="invalid-feedback">
+                    Please provide a valid nickname (3-20 chars; letters, numbers, underscores, hyphens).
+                  </div>
+                </div>
+                <div class="form-text text-muted">
+                  3–20 chars; letters, numbers, underscores & hyphens.
+                </div>
+              </div>
+              
+              <!-- Email -->
+              <div class="mb-4">
+                <label for="email" class="form-label">Email</label>
+                <div class="input-group has-validation"> 
+                  <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    required
+                    placeholder="you@example.com">
+                  <div class="invalid-feedback">
+                    Please provide a valid email address.
+                  </div>
+                </div>
+                <div class="form-text text-muted">
+                  We'll never share your email.
+                </div>
+              </div>
+              
+              <!-- Password -->
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group has-validation"> 
+                  <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    required
+                    minlength="8"
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*"
+                    placeholder="••••••••">
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    onclick="togglePassword('password', this)">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <div class="invalid-feedback">
+                    Password must be at least 8 characters, including uppercase, lowercase, and a number.
+                  </div>
+                </div>
+                <div class="form-text text-muted">
+                  8+ chars, mixed upper/lowercase & numbers.
+                </div>
+              </div>
+              
+              <!-- Confirm Password -->
+              <div class="mb-4">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <div class="input-group has-validation"> 
+                  <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="confirmPassword"
+                    required
+                    placeholder="••••••••">
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    onclick="togglePassword('confirmPassword', this)">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <div class="invalid-feedback">
+                    Please confirm your password. Passwords must match.
+                  </div>
+                </div>
+                <div class="form-text text-muted">
+                  Must match your password.
+                </div>
+              </div>
+              
+              <!-- Birthdate -->
+              <div class="mb-4">
+                <label for="birthdate" class="form-label">Birthdate</label>
+                <div class="input-group has-validation"> 
+                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="birthdate"
+                    required
+                    max=""> 
+                  <div class="invalid-feedback">
+
+                    Please provide your birthdate. You must be at least 18 years old.
+                  </div>
+                </div>
+                <div class="form-text text-muted"> 
+                  You must be at least 18 years old.
+                </div>
+              </div>
+              
+              <!-- Submit -->
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="fas fa-user-plus me-1"></i> Register
+                </button>
+              </div>
+            </form>
+            
+            <hr class="my-4">
+            
+            <p class="text-center mb-1">
+              <i class="fas fa-sign-in-alt me-1"></i>
+              Already have an account?
+              <a href="login.html">Login here</a>
+            </p>
+            <p class="text-center">
+              <a href="index.html">
+                <i class="fas fa-home me-1"></i> Back to Home
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bootstrap & your scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/common.js"></script> 
+  <script src="js/auth.js"></script>  
+
+  <script>
+    // Toggle Password Visibility Function (from previous request)
+    function togglePassword(fieldId, button) {
+      const passwordField = document.getElementById(fieldId);
+      const icon = button.querySelector('i');
+
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        passwordField.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    // Birthdate Validation and Form Handling
+    document.addEventListener('DOMContentLoaded', function () {
+      const birthdateInput = document.getElementById('birthdate');
+      const registerForm = document.getElementById('registerForm');
+
+      // Ensure elements exist before adding listeners
+      if (birthdateInput && registerForm) {
+
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+        const dd = String(today.getDate()).padStart(2, '0');
+        const todayString = `${yyyy}-${mm}-${dd}`;
+        birthdateInput.setAttribute('max', todayString);
+
+        function handleBirthdateValidation() {
+          const birthDateValue = birthdateInput.value;
+          
+          birthdateInput.setCustomValidity('');
+
+          if (!birthDateValue) {
+
+            return;
+          }
+
+          const selectedBirthDate = new Date(birthDateValue);
+          const currentDate = new Date();
+          
+          if (selectedBirthDate > currentDate) {
+            birthdateInput.setCustomValidity('Birthdate cannot be in the future.');
+            return; 
+          }
+          
+          // Calculate age
+          let age = currentDate.getFullYear() - selectedBirthDate.getFullYear();
+          const monthDiff = currentDate.getMonth() - selectedBirthDate.getMonth();
+          
+          if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < selectedBirthDate.getDate())) {
+              age--;
+          }
+
+          if (age < 18) {
+            birthdateInput.setCustomValidity('You must be at least 18 years old to register.');
+          }
+
+        }
+
+        birthdateInput.addEventListener('change', handleBirthdateValidation);
+
+        registerForm.addEventListener('submit', function (event) {
+
+          handleBirthdateValidation(); 
+
+
+          if (!registerForm.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation(); 
+          }
+
+          registerForm.classList.add('was-validated');
+        }, false); 
+      } else {
+        if (!birthdateInput) console.error("Birthdate input field with id 'birthdate' not found.");
+        if (!registerForm) console.error("Form with id 'registerForm' not found.");
+      }
+    });
+  </script>
+
+</body>
+</html>

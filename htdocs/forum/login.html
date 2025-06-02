@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Ankara - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/colors.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center">
+            <div class="col-md-6 col-lg-5 col-xl-4">
+                <div class="card">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-comments display-4 text-primary mb-3"></i>
+                            <h2 class="h3 mb-3">Welcome to Forum Ankara</h2>
+                            <p class="text-muted">Sign in to your account</p>
+                        </div>
+                        
+                        <div id="alertContainer"></div>
+                        
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="loginIdentifier" class="form-label">
+                                    <i class="fas fa-user me-2"></i>
+                                    Email or Nickname
+                                </label>
+                                <input type="text" class="form-control" id="loginIdentifier" placeholder="Enter your email or nickname" required>
+                                <div class="invalid-feedback">
+                                    Please enter your email or nickname.
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label">
+                                    <i class="fas fa-lock me-2"></i>
+                                    Password
+                                </label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('loginPassword', this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please enter your password.
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-sign-in-alt me-2"></i> 
+                                    Sign In
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="text-center">
+                            <p class="mb-2">
+                                Don't have an account? 
+                                <a href="register.html" class="text-decoration-none fw-semibold">Create one here</a>
+                            </p>
+                            <p class="mb-0">
+                                <a href="index.html" class="text-muted text-decoration-none">
+                                    <i class="fas fa-arrow-left me-2"></i>Back to Forum Ankara
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <!-- toggle password function -->
+    <script>
+    function togglePassword(fieldId, button) {
+        console.log('Toggle password called for:', fieldId);
+        
+        const passwordField = document.getElementById(fieldId);
+        const icon = button.querySelector('i');
+        
+        if (passwordField && icon) {
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+                button.title = 'Hide password';
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+                button.title = 'Show password';
+            }
+            console.log('Password visibility toggled');
+        } else {
+            console.error('Could not find password field or icon');
+        }
+    }
+    </script>
+</body>
+</html>

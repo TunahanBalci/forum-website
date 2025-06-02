@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile - Forum Ankara</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
+  <link rel="stylesheet" href="css/colors.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-comments"></i> Forum Ankara
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fas fa-home me-2"></i> Home
+            </a>
+          </li>
+          <li class="nav-item" id="messagesLink" style="display:none;">
+            <a class="nav-link" href="messages.html">
+              <i class="fas fa-envelope me-2"></i> Messages
+            </a>
+          </li>
+          <li class="nav-item" id="loginLink">
+            <a class="nav-link" href="login.html">
+              <i class="fas fa-sign-in-alt me-2"></i> Login
+            </a>
+          </li>
+          <li class="nav-item" id="registerLink">
+            <a class="nav-link" href="register.html">
+              <i class="fas fa-user-plus me-2"></i> Register
+            </a>
+          </li>
+          <li class="nav-item dropdown" id="userMenu" style="display:none;">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+              <img src="images/default-avatar.png" class="rounded-circle me-2" width="25" height="25" id="navAvatar">
+              <span id="navUsername"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i> Profile</a></li>
+              <li><a class="dropdown-item" href="#" onclick="showNotifications()"><i class="fas fa-bell me-2"></i> Notifications <span class="badge bg-danger rounded-pill ms-2" id="notifCount">0</span></a></li>
+              <li id="adminMenu" style="display:none;">
+                <hr class="dropdown-divider">
+                <a class="dropdown-item" href="admin.html"><i class="fas fa-cog me-2"></i> Admin Panel</a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container mt-4">
+    <div id="alertContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 1055;"></div>
+    
+    <!-- Page Header -->
+    <div class="row align-items-center mb-4">
+      <div class="col">
+        <h2 class="mb-0">
+          <i class="fas fa-user-circle me-2"></i>
+          Your Profile
+        </h2>
+        <p class="text-muted mb-0">Manage your Forum Ankara profile and settings</p>
+      </div>
+    </div>
+
+    <!-- Profile Overview Card -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 style="color:white" class="mb-0">
+          <i class="fas fa-id-card me-2"></i>
+          Profile Information
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-4">
+          <div class="col-md-4 text-center">
+            <div class="profile-avatar-section">
+              <img
+                id="profileAvatar"
+                src="images/default-avatar.png"
+                class="profile-avatar rounded-circle mb-3"
+                width="150"
+                height="150"
+                alt="Profile Avatar"
+              />
+              <form id="avatarForm" class="mb-3">
+                <div class="mb-3">
+                  <label for="avatarInput" class="form-label">
+                    <i class="fas fa-camera me-2"></i>
+                    Update Profile Picture
+                  </label>
+                  <input
+                    type="file"
+                    id="avatarInput"
+                    accept="image/*"
+                    class="form-control"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-upload me-2"></i>
+                  Upload Image
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label text-muted">
+                  <i class="fas fa-user me-2"></i>
+                  Nickname
+                </label>
+                <p class="fs-5 fw-semibold mb-0" id="profileNickname">Loading...</p>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label text-muted">
+                  <i class="fas fa-id-badge me-2"></i>
+                  Full Name
+                </label>
+                <p class="fs-5 fw-semibold mb-0" id="profileFullname">Loading...</p>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label text-muted">
+                  <i class="fas fa-envelope me-2"></i>
+                  Email
+                </label>
+                <p class="fs-6 mb-0" id="profileEmail">Loading...</p>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label text-muted">
+                  <i class="fas fa-birthday-cake me-2"></i>
+                  Birthdate
+                </label>
+                <p class="fs-6 mb-0" id="profileBirthdate">Loading...</p>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label text-muted">
+                  <i class="fas fa-calendar-alt me-2"></i>
+                  Member Since
+                </label>
+                <p class="fs-6 mb-0" id="profileJoined">Loading...</p>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label text-muted">
+                  <i class="fas fa-comments me-2"></i>
+                  Total Posts
+                </label>
+                <p class="fs-6 mb-0">
+                  <span class="badge bg-primary rounded-pill" id="profilePostCount">0</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Account Settings -->
+      <div class="col-lg-6">
+        <!-- Change Nickname -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 style="color:white" class="mb-0">
+              <i class="fas fa-edit me-2"></i>
+              Change Nickname
+            </h5>
+          </div>
+          <div class="card-body">
+            <form id="nicknameForm">
+              <div class="mb-3">
+                <label for="newNickname" class="form-label">New Nickname</label>
+                <input
+                  type="text"
+                  id="newNickname"
+                  class="form-control"
+                  placeholder="Enter new nickname"
+                  required
+                  maxlength="20"
+                />
+                <div class="form-text">Choose a unique nickname (3-20 characters)</div>
+              </div>
+              <button class="btn btn-primary" type="submit">
+                <i class="fas fa-save me-2"></i>
+                Update Nickname
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Change Password -->
+        <div class="card">
+          <div class="card-header">
+            <h5 style="color:white" class="mb-0">
+              <i class="fas fa-lock me-2"></i>
+              Change Password
+            </h5>
+          </div>
+          <div class="card-body">
+            <form id="passwordForm">
+              <div class="mb-3">
+                <label for="currentPassword" class="form-label">Current Password</label>
+                <input
+                  type="password"
+                  id="currentPassword"
+                  class="form-control"
+                  placeholder="Enter current password"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="newPassword" class="form-label">New Password</label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  class="form-control"
+                  placeholder="Enter new password"
+                  required
+                  minlength="8"
+                />
+                <div class="form-text">Password must be at least 8 characters long</div>
+              </div>
+              <div class="mb-3">
+                <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
+                <input
+                  type="password"
+                  id="confirmNewPassword"
+                  class="form-control"
+                  placeholder="Confirm new password"
+                  required
+                />
+              </div>
+              <button class="btn btn-primary" type="submit">
+                <i class="fas fa-key me-2"></i>
+                Update Password
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bio Section -->
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 style="color:white" class="mb-0">
+              <i class="fas fa-user-edit me-2"></i>
+              About You
+            </h5>
+          </div>
+          <div class="card-body">
+            <form id="bioForm">
+              <div class="mb-3">
+                <label for="bio" class="form-label">Bio</label>
+                <textarea
+                  id="bio"
+                  class="form-control"
+                  rows="8"
+                  placeholder="Tell the Forum Ankara community about yourself..."
+                  maxlength="500"
+                ></textarea>
+                <div class="form-text">Share your interests, hobbies, or anything you'd like others to know (max 500 characters)</div>
+              </div>
+              <button class="btn btn-primary" type="submit">
+                <i class="fas fa-save me-2"></i>
+                Update Bio
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications Modal -->
+  <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notificationsModalLabel">
+            <i class="fas fa-bell me-2"></i>
+            Notifications
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0" id="notificationsList">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Box -->
+  <div id="messageBox" class="message-box" style="display:none;" role="dialog" aria-labelledby="messageBoxTitle">
+    <div class="message-header">
+      <img src="images/default-avatar.png" width="32" height="32" class="rounded-circle" alt="User avatar">
+      <span id="messageRecipientName" class="fw-bold"></span>
+      <button type="button" class="btn-close btn-close-white ms-auto" onclick="closeMessageBox()" aria-label="Close message box"></button>
+    </div>
+    <div class="message-body" id="messageHistory">
+    </div>
+    <div class="message-input">
+      <div class="input-group">
+        <input type="text" class="form-control" id="messageInput" placeholder="Type a message..." maxlength="500" aria-label="Message input">
+        <button class="btn btn-primary" onclick="sendMessage()" aria-label="Send message">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
